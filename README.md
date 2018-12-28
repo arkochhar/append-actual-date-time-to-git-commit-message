@@ -22,10 +22,7 @@ mkdir -p ~/.git-templates/hooks
 ## Write your hooks in ```~/.git-templates/hooks```:
 For example, here's a commit-msg hook (located in ~/.git-templates/hooks/commit-msg):  
 ```shell
-cd ~/.git-templates/hooks
-```
-```shell
-wget --no-check-certificate --content-disposition https://github.com/techpulsetoday/append-actual-date-time-to-git-commit-message/raw/master/commit-msg
+wget --no-check-certificate --content-disposition https://github.com/techpulsetoday/append-actual-date-time-to-git-commit-message/raw/master/commit-msg -P ~/.git-templates/hooks/
 ```
 
 ## Make sure the hook is executable:
