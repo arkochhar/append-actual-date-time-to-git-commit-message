@@ -22,4 +22,27 @@
 #	echo >&2 Duplicate Signed-off-by lines.
 #	exit 1
 #}
+# Text Reset
+RESET='\e[0m'
+BLINK='\e[5m'
+
+# Regular Colors
+RED='\e[0;31m'
+YELLOW='\e[0;33m'
+GREEN='\e[0;32m'
+
+# Append actual date and time to git commit message
 sed -i.bak -e "1s/^/[`date +"%F %T"`] /" $1
+
+# Aspell to spellcheck for commit messages.
+ASPELL=$(which aspell)
+if [ $? -ne 0 ]; then
+    echo "${RED}Aspell not installed - unable to check spelling${RESET}" >&2
+    exit
+else
+    WORDS=$(${ASPELL} list < "$1")
+fi
+if [ -n "${WORDS}" ]; then
+    echo "${YELLOW}Possible spelling errors found in commit message. Use ${RESET}${GREEN}${BLINK}git commit --amend -m 'New commit message' ${RESET}${YELLOW}to change the message.${RESET}"
+    echo "${YELLOW}Possible mispelled words: ${RESET}${RED}" $WORDS "${RESET}" >&2
+fi
